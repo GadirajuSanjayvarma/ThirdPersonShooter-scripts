@@ -7,6 +7,11 @@ public class playerController : MonoBehaviour
     // Start is called before the first frame update
          public Animator anim;
           public float smoothBlend;
+             public float xAccumulator;
+    public float yAccumulator;
+    public float xSpeedAccumulator;
+    public float zSpeedAccumulator;
+    public float Snappiness = 10.0f;
         public playerMotor motor;
         [SerializeField]
 
@@ -14,6 +19,7 @@ public class playerController : MonoBehaviour
     public float lookSensitivity;
     void Start()
     {
+          smoothBlend=0.1f;
            motor = gameObject.GetComponent<playerMotor>();
     }
 
@@ -44,10 +50,11 @@ public class playerController : MonoBehaviour
         float _xMov = Input.GetAxisRaw("Horizontal");
         float _zMov = Input.GetAxisRaw("Vertical");
     
-
+        xSpeedAccumulator= Mathf.Lerp( xSpeedAccumulator,_xMov, Snappiness * Time.deltaTime);
+        zSpeedAccumulator = Mathf.Lerp(zSpeedAccumulator,_zMov, Snappiness * Time.deltaTime);
          
-        anim.SetFloat("forward", _zMov,smoothBlend,Time.deltaTime);
-        anim.SetFloat("sideways", _xMov,smoothBlend,Time.deltaTime);
+        anim.SetFloat("forward",  xSpeedAccumulator,smoothBlend,Time.deltaTime);
+        anim.SetFloat("sideways", zSpeedAccumulator,smoothBlend,Time.deltaTime);
     
         Vector3 _movHorizontal = transform.right * _xMov;
         Vector3 _movVertical = transform.forward * _zMov;
