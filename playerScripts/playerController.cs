@@ -47,9 +47,9 @@ public class playerController : MonoBehaviour
     
     void pcInput()
     {
-        float _xMov = Input.GetAxisRaw("Horizontal");
+        float _xMov = Input.GetAxisRaw("Horizontal"); //_xMOv=1
         float _zMov = Input.GetAxisRaw("Vertical");
-    
+                                        
         xSpeedAccumulator= Mathf.Lerp( xSpeedAccumulator,_xMov, Snappiness * Time.deltaTime);
         zSpeedAccumulator = Mathf.Lerp(zSpeedAccumulator,_zMov, Snappiness * Time.deltaTime);
          
